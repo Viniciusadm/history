@@ -10,15 +10,17 @@ javascript:(function() {
 
     const musics = [];
 
-    itens.forEach((item) => {
+    itens.forEach((item, index) => {
         const element = item.querySelector("yt-formatted-string:nth-child(2) > a");
 
         const title = item.querySelector("yt-formatted-string > a").textContent;
-        const artist = item.querySelector("yt-formatted-string:nth-child(1) > a").textContent;
+        const artist = item.querySelector("div.secondary-flex-columns.style-scope.ytmusic-responsive-list-item-renderer > yt-formatted-string:nth-child(1) > a").textContent;
         const album = element ? element.textContent : '';
         const time = convertTimeToSeconds(item.querySelector("div.fixed-columns.style-scope.ytmusic-responsive-list-item-renderer > yt-formatted-string").textContent);
 
-        musics.push({ title, artist, album, time });
+        musics.push({ index, title, artist, album, time });
+
+        musics.sort((a, b) => b.index - a.index);
     });
 
     const saveJSON = (data) => {
